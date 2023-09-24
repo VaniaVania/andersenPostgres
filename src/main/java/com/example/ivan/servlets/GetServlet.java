@@ -2,8 +2,6 @@ package com.example.ivan.servlets;
 
 import com.example.ivan.config.DbConfig;
 import com.example.ivan.entity.User;
-import com.jcraft.jsch.JSch;
-import com.jcraft.jsch.Session;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,13 +9,12 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.Serial;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GetServlet extends HttpServlet {
-    @Serial
+
     private static final long serialVersionUID = 1L;
     private static final Connection connection;
 
