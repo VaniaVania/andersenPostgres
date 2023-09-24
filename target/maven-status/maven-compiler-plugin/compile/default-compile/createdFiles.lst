@@ -1,4 +1,3 @@
-com\andersen\example\MyServlet.class
 com\example\ivan\servlets\GetServlet.class
 com\example\ivan\servlets\DeleteServlet.class
 com\example\ivan\servlets\PutServlet.class
