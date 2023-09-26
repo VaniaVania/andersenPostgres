@@ -20,7 +20,7 @@ public class GetServlet extends HttpServlet {
 
     static {
         try {
-            Class.forName("org.postgresql.Driver");
+            Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
