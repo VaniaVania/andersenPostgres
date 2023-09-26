@@ -1,6 +1,6 @@
 package com.example.ivan.servlets;
 
-import com.example.ivan.config.DbConfig;
+import com.example.ivan.config.DatabaseConfig;
 import com.example.ivan.entity.User;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -16,28 +16,7 @@ import java.util.List;
 public class GetServlet extends HttpServlet {
 
     private static final long serialVersionUID = 1L;
-    private static final Connection connection;
-
-    static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        String url = DbConfig.DB_URL;
-        String username = DbConfig.DB_USERNAME;
-        String password = DbConfig.DB_PASSWORD;
-
-        try {
-            connection = DriverManager.getConnection(url, username, password);
-            connection.setTransactionIsolation(Connection.TRANSACTION_READ_UNCOMMITTED);
-            connection.setAutoCommit(false);
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    private static final Connection connection = DatabaseConfig.getConnection();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -48,13 +27,13 @@ public class GetServlet extends HttpServlet {
         for (User user : users) {
             pw.println("<h1>" + user.getId() + " | " + user.getUsername() + "</h1>");
 
-            pw.println("<form action=\"/rps/update\" method=\"POST\">");
+            pw.println("<form action=\"/update\" method=\"POST\">");
             pw.write("<input class=\"form-control\" type=\"hidden\" name=\"id\" value=\"" + user.getId() + "\">");
             pw.write("<input class=\"form-control\" name=\"username\" placeholder=\"Update:\" type=\"text\">");
             pw.println("<button type=\"submit\">Update User</button>");
             pw.println("</form>");
 
-            pw.println("<form action=\"/rps/delete\" method=\"POST\">");
+            pw.println("<form action=\"/delete\" method=\"POST\">");
             pw.write("<input class=\"form-control\" type=\"hidden\" name=\"id\" value=\"" + user.getId() + "\">");
             pw.println("<button type=\"submit\">Delete User</button>");
             pw.println("</form>");
@@ -70,19 +49,19 @@ public class GetServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = resp.getWriter();
+        PrintWriter pw = resp.getWriter();
         String username = req.getParameter("username");
         addUser(username);
 
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Добавление пользователя</title>");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<h1>Пользователь успешно добавлен!</h1>");
-        out.println("<p>Имя пользователя: " + username + "</p>");
-        out.println("</body>");
-        out.println("</html>");
+        pw.println("<html>");
+        pw.println("<head>");
+        pw.println("<title>Добавление пользователя</title>");
+        pw.println("</head>");
+        pw.println("<body>");
+        pw.println("<h1>Пользователь успешно добавлен!</h1>");
+        pw.println("<p>Имя пользователя: " + username + "</p>");
+        pw.println("</body>");
+        pw.println("</html>");
     }
 
     public List<User> getUsers() {
@@ -113,5 +92,7 @@ public class GetServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
     }
+
+
 
 }
