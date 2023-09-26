@@ -48,13 +48,13 @@ public class GetServlet extends HttpServlet {
         for (User user : users) {
             pw.println("<h1>" + user.getId() + " | " + user.getUsername() + "</h1>");
 
-            pw.println("<form action=\"/update\" method=\"POST\">");
+            pw.println("<form action=\"/rps/update\" method=\"POST\">");
             pw.write("<input class=\"form-control\" type=\"hidden\" name=\"id\" value=\"" + user.getId() + "\">");
             pw.write("<input class=\"form-control\" name=\"username\" placeholder=\"Update:\" type=\"text\">");
             pw.println("<button type=\"submit\">Update User</button>");
             pw.println("</form>");
 
-            pw.println("<form action=\"/delete\" method=\"POST\">");
+            pw.println("<form action=\"/rps/delete\" method=\"POST\">");
             pw.write("<input class=\"form-control\" type=\"hidden\" name=\"id\" value=\"" + user.getId() + "\">");
             pw.println("<button type=\"submit\">Delete User</button>");
             pw.println("</form>");
